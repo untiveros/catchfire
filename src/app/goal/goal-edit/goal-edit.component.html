@@ -1,0 +1,35 @@
+<md-card>
+  <h3 class="module-title-style">{{ pageTitle }}</h3>
+  <hr>
+
+  <form novalidate (ngSubmit)="saveGoal()" [formGroup]="goalForm">
+
+    <md-input-container class="full-width">
+      <input mdInput placeholder="Goal" formControlName="goalName">
+      <md-hint *ngIf="goalMessage" [ngStyle]="{'color': 'red'}">{{ goalMessage }}</md-hint>
+    </md-input-container>
+
+    <br />
+
+    <md-input-container class="full-width">
+      <textarea mdInput placeholder="Goal Description" formControlName="goalDescription"></textarea>
+      <!--<md-hint *ngIf="goalDescriptionMessage" [ngStyle]="{'color': 'red'}">{{ goalDescriptionMessage }}</md-hint>-->
+    </md-input-container>
+
+    <!--<br />
+
+    <md-radio-group formControlName="positiveTrait">
+      <md-radio-button value="1">Positive Trait</md-radio-button>
+      <md-radio-button value="0">Negative Trait</md-radio-button>
+    </md-radio-group>-->
+    
+    <br />
+    <br />
+
+    <div class="align-center">
+      <button md-raised-button color="primary" type="submit" [disabled]="!goalForm.valid">Save</button>
+      <button md-raised-button [routerLink]="['/goals']">Cancel</button>
+    </div>
+
+  </form>
+</md-card>

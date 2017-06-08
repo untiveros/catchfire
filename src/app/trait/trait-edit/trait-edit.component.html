@@ -1,0 +1,35 @@
+<md-card>
+  <h3 class="module-title-style">{{ pageTitle }}</h3>
+  <hr>
+
+  <form novalidate (ngSubmit)="saveTrait()" [formGroup]="traitForm">
+
+    <md-input-container class="full-width">
+      <input mdInput placeholder="Trait" formControlName="traitName">
+      <md-hint *ngIf="traitMessage" [ngStyle]="{'color': 'red'}">{{ traitMessage }}</md-hint>
+    </md-input-container>
+
+    <br />
+
+    <md-input-container class="full-width">
+      <textarea mdInput placeholder="Trait Description" formControlName="traitDescription"></textarea>
+      <!--<md-hint *ngIf="traitDescriptionMessage" [ngStyle]="{'color': 'red'}">{{ traitDescriptionMessage }}</md-hint>-->
+    </md-input-container>
+
+    <br />
+
+    <md-radio-group formControlName="positiveTrait">
+      <md-radio-button [value]=true>Positive Trait</md-radio-button>
+      <md-radio-button [value]=false>Negative Trait</md-radio-button>
+    </md-radio-group>
+    
+    <br />
+    <br />
+
+    <div class="align-center">
+      <button md-raised-button color="primary" type="submit" [disabled]="!traitForm.valid">Save</button>
+      <button md-raised-button [routerLink]="['/traits']">Cancel</button>
+    </div>
+
+  </form>
+</md-card>

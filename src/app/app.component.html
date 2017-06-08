@@ -1,0 +1,31 @@
+<md-sidenav-container fullscreen>
+  <md-sidenav #menu style="width: 140px;">
+    <md-nav-list>
+      <a md-list-item routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="menu.close()">
+        <md-icon>home</md-icon>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Home</a>
+    </md-nav-list>
+    <md-nav-list>
+      <a md-list-item routerLink="/traits" routerLinkActive="active" (click)="menu.close()">
+        <md-icon>accessibility</md-icon>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Traits</a>
+    </md-nav-list>
+    <md-nav-list>
+      <a md-list-item routerLink="/goals" routerLinkActive="active" (click)="menu.close()">
+        <md-icon>gps_fixed</md-icon>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Goals</a>
+    </md-nav-list>
+  </md-sidenav>
+  <md-toolbar color="primary">
+    <button md-icon-button (click)="menu.open()">
+        <md-icon>menu</md-icon>
+        {{title}}
+    </button>
+  </md-toolbar>
+  <div class="main-content">
+    <nav md-tab-nav-bar>
+      <a md-tab-link *ngFor="let link of navLinks" [routerLink]="link[0]" routerLinkActive #rla="routerLinkActive" [active]="rla.isActive"
+        [routerLinkActiveOptions]="{ exact: true }">
+    {{link[1]}}
+  </a>
+    </nav>
+    <router-outlet></router-outlet>
+  </div>
+</md-sidenav-container>

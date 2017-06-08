@@ -28,6 +28,12 @@ export class GoalEditComponent implements OnInit {
   goal: IGoal;
   private sub: Subscription;
 
+  goalAreas = [
+    {value: 1, viewValue: 'Mental'},
+    {value: 2, viewValue: 'Physical'},
+    {value: 3, viewValue: 'Spiritual'}
+  ];
+
   constructor(private fb: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
@@ -36,7 +42,8 @@ export class GoalEditComponent implements OnInit {
   ngOnInit() {
     this.goalForm = this.fb.group({
       goalName: ['', [Validators.required, Validators.minLength(3)]],
-      goalDescription: ['', [Validators.required, Validators.maxLength(500)]]
+      goalDescription: ['', [Validators.required, Validators.maxLength(500)]],
+      goalAreaId: ['']
     });
 
     // Read the trait Id from the route parameter
@@ -103,11 +110,12 @@ export class GoalEditComponent implements OnInit {
     // Update the data on the form
     this.goalForm.patchValue({
       goalName: this.goal.goalName,
-      goalDescription: this.goal.goalDescription
+      goalDescription: this.goal.goalDescription,
+      goalAreaId: this.goal.goalAreaId
     });
   }
 
-  saveTrait(): void {
+  saveGoal(): void {
     if (this.goalForm.dirty && this.goalForm.valid) {
       // Copy the form values over the product object values
       let p = Object.assign({}, this.goal, this.goalForm.value);

@@ -16,13 +16,15 @@
       <!--<md-hint *ngIf="goalDescriptionMessage" [ngStyle]="{'color': 'red'}">{{ goalDescriptionMessage }}</md-hint>-->
     </md-input-container>
 
-    <!--<br />
+    <br />
 
-    <md-radio-group formControlName="positiveTrait">
-      <md-radio-button value="1">Positive Trait</md-radio-button>
-      <md-radio-button value="0">Negative Trait</md-radio-button>
-    </md-radio-group>-->
-    
+    <md-select placeholder="Goal Area" formControlName="goalAreaId">
+      <md-option>None</md-option>
+      <md-option *ngFor="let goalArea of goalAreas" [value]="goalArea.value">
+        {{ goalArea.viewValue }}
+      </md-option>
+    </md-select>
+
     <br />
     <br />
 

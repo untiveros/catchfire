@@ -14,6 +14,8 @@ import { Subscription } from 'rxjs/Subscription';
 import { TraitService } from '../trait.service';
 import { ITrait } from '../trait';
 
+import { MdSnackBar } from "@angular/material";
+
 @Component({
   selector: 'app-trait-edit',
   templateUrl: './trait-edit.component.html',
@@ -31,16 +33,17 @@ export class TraitEditComponent implements OnInit, OnDestroy {
   constructor(private fb: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private traitService: TraitService) { }
+    private traitService: TraitService,
+    public snackBar: MdSnackBar) { }
 
   ngOnInit() {
     this.traitForm = this.fb.group({
       traitName: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
-      traitDescription: ['', [Validators.required, Validators.maxLength(500)]],
+      traitDescription: ['', [Validators.maxLength(500)]],
       positiveTrait: ['']
     });
 
-    // Read the trait Id from the route parameter
+    // Read the Id from the route parameter
     this.sub = this.route.params.subscribe(
       params => {
         let id = +params['id'];
@@ -50,14 +53,11 @@ export class TraitEditComponent implements OnInit, OnDestroy {
 
 
 
-
-
-
     const traitControl = this.traitForm.get('traitName');
     traitControl.valueChanges.debounceTime(1000).subscribe(value => this.traitSetMessage(traitControl));
 
-    // const traitDescriptionControl = this.traitForm.get('traitDescription');
-    // traitDescriptionControl.valueChanges.debounceTime(1000).subscribe(value => this.traitDescriptionSetMessage(traitDescriptionControl));
+    const traitDescriptionControl = this.traitForm.get('traitDescription');
+    traitDescriptionControl.valueChanges.debounceTime(1000).subscribe(value => this.traitDescriptionSetMessage(traitDescriptionControl));
   }
 
   ngOnDestroy(): void {
@@ -67,7 +67,8 @@ export class TraitEditComponent implements OnInit, OnDestroy {
   traitMessage: string;
   private traitValidationMessages = {
     required: 'Please enter trait.',
-    minlength: 'Minimum length is 3.'
+    minlength: 'Minimum length is 3.',
+    maxlength: 'Maximum length is 500.'
   };
   traitSetMessage(c: AbstractControl): void {
     this.traitMessage = '';
@@ -78,19 +79,18 @@ export class TraitEditComponent implements OnInit, OnDestroy {
     }
   }
 
-  // traitDescriptionMessage: string;
-  // private traitDescriptionValidationMessages = {
-  //   required: 'Please enter trait description.',
-  //   maxlength: 'maximum length is 50.'
-  // };
-  // traitDescriptionSetMessage(c: AbstractControl): void {
-  //   this.traitDescriptionMessage = '';
+  traitDescriptionMessage: string;
+  private traitDescriptionValidationMessages = {
+    maxlength: 'Maximum length is 500.'
+  };
+  traitDescriptionSetMessage(c: AbstractControl): void {
+    this.traitDescriptionMessage = '';
 
-  //   if ((c.touched || c.dirty) && c.errors) {
-  //     this.traitDescriptionMessage = Object.keys(c.errors).map(key =>
-  //       this.traitDescriptionValidationMessages[key]).join(' ');
-  //   }
-  // }
+    if ((c.touched || c.dirty) && c.errors) {
+      this.traitDescriptionMessage = Object.keys(c.errors).map(key =>
+        this.traitDescriptionValidationMessages[key]).join(' ');
+    }
+  }
 
 
 
@@ -134,18 +134,28 @@ export class TraitEditComponent implements OnInit, OnDestroy {
 
       this.traitService.saveTrait(p)
         .subscribe(
-          () => this.onSaveComplete(),
-          (error: any) => this.errorMessage = <any>error
-          );
+        () => this.onSaveComplete(),
+        (error: any) => this.onError(<any>error)
+        );
     } else if (!this.traitForm.dirty) {
       this.onSaveComplete();
     }
   }
 
   onSaveComplete(): void {
+    this.snackBar.open('Successfully saved.', '', {
+      duration: 3000,
+    });
+
     // Reset the form to clear the flags
     this.traitForm.reset();
     this.router.navigate(['/traits']);
+  }
+
+  onError(error: any): void {
+    this.snackBar.open(error, '', {
+      duration: 3000,
+    });
   }
 
 }

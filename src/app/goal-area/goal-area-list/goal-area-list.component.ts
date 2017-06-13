@@ -1,33 +1,33 @@
 import { Component, OnInit } from '@angular/core';
 
-import { ITrait } from '../trait';
-import { TraitService } from '../trait.service';
+import { IGoalArea } from '../goal-area';
+import { GoalAreaService } from '../goal-area.service';
 
 import { MdDialog, MdDialogRef, MdSnackBar } from "@angular/material";
 import { ConfirmDeleteDialogComponent } from '../../confirm-delete-dialog/confirm-delete-dialog.component';
 
 @Component({
-  selector: 'app-trait-list',
-  templateUrl: './trait-list.component.html',
-  styleUrls: ['./trait-list.component.css']
+  selector: 'app-goal-area-list',
+  templateUrl: './goal-area-list.component.html',
+  styleUrls: ['./goal-area-list.component.css']
 })
-export class TraitListComponent implements OnInit {
-  pageTitle: string = 'Trait List';
+export class GoalAreaListComponent implements OnInit {
+  pageTitle: string = 'Goal Area List';
   errorMessage: string;
-  traits: ITrait[];
+  goalAreas: IGoalArea[];
 
-  constructor(private traitService: TraitService,
+  constructor(private goalAreaService: GoalAreaService,
     public dialog: MdDialog,
     public snackBar: MdSnackBar) { }
 
   ngOnInit() {
-    this.traitService.getTraits()
-      .subscribe(traits => this.traits = traits,
+    this.goalAreaService.getGoalAreas()
+      .subscribe(goalAreas => this.goalAreas = goalAreas,
       error => this.errorMessage = <any>error);
   }
 
-  deleteTrait(trait: ITrait): void {
-    if (trait.traitId === 0) {
+  deleteGoalArea(goalArea: IGoalArea): void {
+    if (goalArea.goalAreaId === 0) {
       // Don't delete, it was never saved.
       this.onSaveComplete();
     } else {
@@ -35,9 +35,9 @@ export class TraitListComponent implements OnInit {
 
       dialogRef.afterClosed().subscribe(result => {
         if (result == 'delete') {
-          this.traitService.deleteTrait(trait.traitId)
+          this.goalAreaService.deleteGoalArea(goalArea.goalAreaId)
             .subscribe(
-            () => this.removeItem(trait),
+            () => this.removeItem(goalArea),
             (error: any) => this.errorMessage = <any>error
             );
 
@@ -53,7 +53,8 @@ export class TraitListComponent implements OnInit {
 
   }
 
-  removeItem(trait: ITrait): void {
-    this.traits.splice(this.traits.indexOf(trait), 1);
+  removeItem(goalArea: IGoalArea): void {
+    this.goalAreas.splice(this.goalAreas.indexOf(goalArea), 1);
   }
+
 }

@@ -1,5 +1,5 @@
 <md-sidenav-container fullscreen>
-  <md-sidenav #menu style="width: 140px;">
+  <md-sidenav #menu style="width: 170px;">
     <md-nav-list>
       <a md-list-item routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="menu.close()">
         <md-icon>home</md-icon>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Home</a>
@@ -12,10 +12,15 @@
       <a md-list-item routerLink="/goals" routerLinkActive="active" (click)="menu.close()">
         <md-icon>gps_fixed</md-icon>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Goals</a>
     </md-nav-list>
+    <md-nav-list>
+      <a md-list-item routerLink="/goal-areas" routerLinkActive="active" (click)="menu.close()">
+        <md-icon>gps_fixed</md-icon>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Goal Areas</a>
+    </md-nav-list>
   </md-sidenav>
   <md-toolbar color="primary">
     <button md-icon-button (click)="menu.open()">
         <md-icon>menu</md-icon>
+        <img src="assets/images/catch-fire-logo.png" class="catch-fire-logo">
         {{title}}
     </button>
   </md-toolbar>
@@ -24,8 +29,10 @@
       <a md-tab-link *ngFor="let link of navLinks" [routerLink]="link[0]" routerLinkActive #rla="routerLinkActive" [active]="rla.isActive"
         [routerLinkActiveOptions]="{ exact: true }">
     {{link[1]}}
-  </a>
+      </a>
     </nav>
-    <router-outlet></router-outlet>
+    <md-card style="padding: 0px;">
+      <router-outlet></router-outlet>
+    </md-card>
   </div>
 </md-sidenav-container>

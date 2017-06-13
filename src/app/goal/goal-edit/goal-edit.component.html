@@ -1,6 +1,6 @@
-<md-card>
-  <h3 class="module-title-style">{{ pageTitle }}</h3>
-  <hr>
+<md-toolbar>{{ pageTitle }}</md-toolbar>
+
+<div style="padding: 20px;">
 
   <form novalidate (ngSubmit)="saveGoal()" [formGroup]="goalForm">
 
@@ -13,15 +13,15 @@
 
     <md-input-container class="full-width">
       <textarea mdInput placeholder="Goal Description" formControlName="goalDescription"></textarea>
-      <!--<md-hint *ngIf="goalDescriptionMessage" [ngStyle]="{'color': 'red'}">{{ goalDescriptionMessage }}</md-hint>-->
+      <md-hint *ngIf="goalDescriptionMessage" [ngStyle]="{'color': 'red'}">{{ goalDescriptionMessage }}</md-hint>
     </md-input-container>
 
     <br />
 
-    <md-select placeholder="Goal Area" formControlName="goalAreaId">
+    <md-select placeholder="Goal Area" formControlName="goalAreaId" style="width: 190px;">
       <md-option>None</md-option>
-      <md-option *ngFor="let goalArea of goalAreas" [value]="goalArea.value">
-        {{ goalArea.viewValue }}
+      <md-option *ngFor="let goalArea of goalAreas" [value]="goalArea.goalAreaId">
+        {{ goalArea.goalAreaName }}
       </md-option>
     </md-select>
 
@@ -34,4 +34,5 @@
     </div>
 
   </form>
-</md-card>
+  
+</div>

@@ -1,20 +1,18 @@
-<md-card>
-  <h3 class="module-title-style">{{ pageTitle }}</h3>
-  <hr>
-  <md-chip-list>
-    <md-chip *ngFor="let goal of goals">
-      <h4 md-line>{{goal.goalName}}</h4>
-      <p md-line>{{goal.goalDescription}}</p>
-      <button md-icon-button [routerLink]="['/goalEdit', goal.goalId]" title="Edit">
+<md-toolbar>
+  {{ pageTitle }}</md-toolbar>
+
+<md-list style="padding-top: 0px;">
+  <md-list-item *ngFor="let goal of goals" style="border-top: 1px solid rgba(0,0,0,.06);">
+    <h4 md-line>{{goal.goalName}}</h4>
+    <button md-icon-button [routerLink]="['/goalEdit', goal.goalId]" mdTooltip="Edit">
         <md-icon>edit</md-icon>
       </button>
-      <button md-icon-button  (click)="deleteGoal(goal)">
+    <button md-icon-button (click)="deleteGoal(goal)" mdTooltip="Delete">
         <md-icon>delete</md-icon>
       </button>
-    </md-chip>
-  </md-chip-list>
+  </md-list-item>
+</md-list>
 
-  <button md-mini-fab class="add-fab" [routerLink]="['/goalEdit', 0]">
+<button md-mini-fab class="add-fab" [routerLink]="['/goalEdit', 0]">
     <md-icon>add</md-icon>
   </button>
-</md-card>

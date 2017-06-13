@@ -1,0 +1,7 @@
+<h1 md-dialog-title>Confirm Delete</h1>
+<p>Are you sure you want to delete the item?</p>
+
+<div class="align-center">
+  <button md-raised-button (click)="dialogRef.close()">Cancel</button>
+  <button md-raised-button color="primary" (click)="dialogRef.close('delete')">Delete</button>
+</div>

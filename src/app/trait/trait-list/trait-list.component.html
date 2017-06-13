@@ -1,20 +1,17 @@
-<md-card>
-  <h3 class="module-title-style">{{ pageTitle }}</h3>
-  <hr>
-  <md-chip-list>
-    <md-chip *ngFor="let trait of traits">
-      <h4 md-line>{{trait.traitName}}</h4>
-      <p md-line>{{trait.traitDescription}}</p>
-      <button md-icon-button [routerLink]="['/traitEdit', trait.traitId]" title="Edit">
+<md-toolbar>{{ pageTitle }}</md-toolbar>
+
+<md-list style="padding-top: 0px;">
+  <md-list-item *ngFor="let trait of traits" style="border-top: 1px solid rgba(0,0,0,.06);">
+    <h4 md-line>{{trait.traitName}}</h4>
+    <button md-icon-button [routerLink]="['/traitEdit', trait.traitId]" mdTooltip="Edit">
         <md-icon>edit</md-icon>
       </button>
-      <button md-icon-button  (click)="deleteTrait(trait)">
+    <button md-icon-button (click)="deleteTrait(trait)" mdTooltip="Delete">
         <md-icon>delete</md-icon>
       </button>
-    </md-chip>
-  </md-chip-list>
+  </md-list-item>
+</md-list>
 
-  <button md-mini-fab class="add-fab" [routerLink]="['/traitEdit', 0]">
+<button md-mini-fab class="add-fab" [routerLink]="['/traitEdit', 0]">
     <md-icon>add</md-icon>
   </button>
-</md-card>

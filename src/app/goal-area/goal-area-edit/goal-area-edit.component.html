@@ -1,0 +1,29 @@
+<md-toolbar>{{ pageTitle }}</md-toolbar>
+
+<div style="padding: 20px;">
+
+  <form novalidate (ngSubmit)="saveGoalArea()" [formGroup]="goalAreaForm">
+
+    <md-input-container class="full-width">
+      <input mdInput placeholder="Goal Area" formControlName="goalAreaName">
+      <md-hint *ngIf="goalAreaMessage" [ngStyle]="{'color': 'red'}">{{ goalAreaMessage }}</md-hint>
+    </md-input-container>
+
+    <br />
+
+    <md-input-container class="full-width">
+      <textarea mdInput placeholder="Goal Area Description" formControlName="goalAreaDescription"></textarea>
+      <md-hint *ngIf="goalAreaDescriptionMessage" [ngStyle]="{'color': 'red'}">{{ goalAreaDescriptionMessage }}</md-hint>
+    </md-input-container>
+    
+    <br />
+    <br />
+
+    <div class="align-center">
+      <button md-raised-button color="primary" type="submit" [disabled]="!goalAreaForm.valid">Save</button>
+      <button md-raised-button [routerLink]="['/goal-areas']">Cancel</button>
+    </div>
+
+  </form>
+
+</div>

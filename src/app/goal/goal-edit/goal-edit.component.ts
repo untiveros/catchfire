@@ -14,6 +14,11 @@ import { Subscription } from 'rxjs/Subscription';
 import { GoalService } from '../goal.service';
 import { IGoal } from '../goal';
 
+import { GoalAreaService } from '../../goal-area/goal-area.service';
+import { IGoalArea } from '../../goal-area/goal-area';
+
+import { MdSnackBar } from "@angular/material";
+
 @Component({
   selector: 'app-goal-edit',
   templateUrl: './goal-edit.component.html',
@@ -28,25 +33,23 @@ export class GoalEditComponent implements OnInit {
   goal: IGoal;
   private sub: Subscription;
 
-  goalAreas = [
-    {value: 1, viewValue: 'Mental'},
-    {value: 2, viewValue: 'Physical'},
-    {value: 3, viewValue: 'Spiritual'}
-  ];
+  goalAreas: IGoalArea[];
 
   constructor(private fb: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private goalService: GoalService) { }
+    private goalService: GoalService,
+    private goalAreaService: GoalAreaService,
+    public snackBar: MdSnackBar) { }
 
   ngOnInit() {
     this.goalForm = this.fb.group({
-      goalName: ['', [Validators.required, Validators.minLength(3)]],
-      goalDescription: ['', [Validators.required, Validators.maxLength(500)]],
+      goalName: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
+      goalDescription: ['', [Validators.maxLength(500)]],
       goalAreaId: ['']
     });
 
-    // Read the trait Id from the route parameter
+    // Read the Id from the route parameter
     this.sub = this.route.params.subscribe(
       params => {
         let id = +params['id'];
@@ -59,6 +62,12 @@ export class GoalEditComponent implements OnInit {
     const goalControl = this.goalForm.get('goalName');
     goalControl.valueChanges.debounceTime(1000).subscribe(value => this.goalSetMessage(goalControl));
 
+    const goalDescriptionControl = this.goalForm.get('goalDescription');
+    goalDescriptionControl.valueChanges.debounceTime(1000).subscribe(value => this.goalDescriptionSetMessage(goalDescriptionControl));
+
+    this.goalAreaService.getGoalAreas()
+      .subscribe(goalAreas => this.goalAreas = goalAreas,
+      error => this.errorMessage = <any>error);
   }
 
   ngOnDestroy(): void {
@@ -68,7 +77,8 @@ export class GoalEditComponent implements OnInit {
   goalMessage: string;
   private goalValidationMessages = {
     required: 'Please enter goal.',
-    minlength: 'Minimum length is 3.'
+    minlength: 'Minimum length is 3.',
+    maxlength: 'Maximum length is 500.'
   };
   goalSetMessage(c: AbstractControl): void {
     this.goalMessage = '';
@@ -79,7 +89,18 @@ export class GoalEditComponent implements OnInit {
     }
   }
 
+  goalDescriptionMessage: string;
+  private goalDescriptionValidationMessages = {
+    maxlength: 'Maximum length is 500.'
+  };
+  goalDescriptionSetMessage(c: AbstractControl): void {
+    this.goalDescriptionMessage = '';
 
+    if ((c.touched || c.dirty) && c.errors) {
+      this.goalDescriptionMessage = Object.keys(c.errors).map(key =>
+        this.goalDescriptionValidationMessages[key]).join(' ');
+    }
+  }
 
 
 
@@ -122,19 +143,28 @@ export class GoalEditComponent implements OnInit {
 
       this.goalService.saveGoal(p)
         .subscribe(
-          () => this.onSaveComplete(),
-          (error: any) => this.errorMessage = <any>error
-          );
+        () => this.onSaveComplete(),
+        (error: any) => this.onError(<any>error)
+        );
     } else if (!this.goalForm.dirty) {
       this.onSaveComplete();
     }
   }
 
   onSaveComplete(): void {
+    this.snackBar.open('Successfully saved.', '', {
+      duration: 3000,
+    });
+
     // Reset the form to clear the flags
     this.goalForm.reset();
     this.router.navigate(['/goals']);
   }
 
+  onError(error: any): void {
+    this.snackBar.open(error, '', {
+      duration: 3000,
+    });
+  }
 
 }

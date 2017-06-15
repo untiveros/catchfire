@@ -7,5 +7,5 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'CatchFire';
-  navLinks = [['/', 'HOME'], ['/traits', 'TRAITS'], ['/goals', 'GOALS'], ['/goal-areas', 'GOAL AREAS']];
+  navLinks = [['/', 'HOME'], ['/traits', 'TRAITS'], ['/goals', 'GOALS'], ['/goal-areas', 'GOAL AREAS'], ['/ingredients', 'INGREDIENTS'], ['/recipes', 'RECIPES']];
 }

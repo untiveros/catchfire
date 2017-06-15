@@ -1,0 +1,29 @@
+<md-toolbar>{{ pageTitle }}</md-toolbar>
+
+<div style="padding: 20px;">
+
+  <form novalidate (ngSubmit)="saveIngredient()" [formGroup]="ingredientForm">
+
+    <md-input-container class="full-width">
+      <input mdInput placeholder="Ingredient" formControlName="ingredientName">
+      <md-hint *ngIf="ingredientMessage" [ngStyle]="{'color': 'red'}">{{ ingredientMessage }}</md-hint>
+    </md-input-container>
+
+    <br />
+
+    <md-input-container class="full-width">
+      <textarea mdInput placeholder="Ingredient Description" formControlName="ingredientDescription"></textarea>
+      <md-hint *ngIf="ingredientDescriptionMessage" [ngStyle]="{'color': 'red'}">{{ ingredientDescriptionMessage }}</md-hint>
+    </md-input-container>
+
+    <br />
+    <br />
+
+    <div class="align-center">
+      <button md-raised-button color="primary" type="submit" [disabled]="!ingredientForm.valid">Save</button>
+      <button md-raised-button [routerLink]="['/ingredients']">Cancel</button>
+    </div>
+
+  </form>
+  
+</div>

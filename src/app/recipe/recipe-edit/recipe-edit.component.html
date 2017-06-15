@@ -1,0 +1,47 @@
+<md-toolbar>{{ pageTitle }}</md-toolbar>
+
+<div style="padding: 20px;">
+
+  <form novalidate (ngSubmit)="saveRecipe()" [formGroup]="recipeForm">
+
+    <md-input-container class="full-width">
+      <input mdInput placeholder="Recipe" formControlName="recipeName">
+      <md-hint *ngIf="recipeMessage" [ngStyle]="{'color': 'red'}">{{ recipeMessage }}</md-hint>
+    </md-input-container>
+
+    <br />
+
+    <md-input-container class="full-width">
+      <textarea mdInput placeholder="Recipe Description" formControlName="recipeDescription"></textarea>
+      <md-hint *ngIf="recipeDescriptionMessage" [ngStyle]="{'color': 'red'}">{{ recipeDescriptionMessage }}</md-hint>
+    </md-input-container>
+
+    <br />
+    <br />
+
+    <div class="align-center">
+      <button md-raised-button color="primary" type="submit" [disabled]="!recipeForm.valid">Save</button>
+      <button md-raised-button [routerLink]="['/recipes']">Cancel</button>
+    </div>
+
+  </form>
+  
+</div>
+
+<md-toolbar>Ingredients</md-toolbar>
+
+<md-list class="md-list-custom">
+  <md-list-item *ngFor="let recipeIngredient of recipeIngredients" class="md-list-item-custom">
+    <h4 md-line>{{recipeIngredient.ingredientName}}</h4>
+    <button md-icon-button [routerLink]="['/ingredientEdit', recipeIngredient.ingredientId]" mdTooltip="Edit">
+        <md-icon>edit</md-icon>
+      </button>
+    <button md-icon-button (click)="deleteRecipeIngredient(recipeIngredient)" mdTooltip="Delete">
+        <md-icon>delete</md-icon>
+      </button>
+  </md-list-item>
+</md-list>
+
+<button md-mini-fab class="add-fab" [routerLink]="['/ingredientEdit', 0]">
+    <md-icon>add</md-icon>
+</button>

@@ -1,0 +1,17 @@
+<md-toolbar>{{ pageTitle }}</md-toolbar>
+
+<md-list class="md-list-custom">
+  <md-list-item *ngFor="let recipe of recipes" class="md-list-item-custom">
+    <h4 md-line>{{recipe.recipeName}}</h4>
+    <button md-icon-button [routerLink]="['/recipeEdit', recipe.recipeId]" mdTooltip="Edit">
+        <md-icon>edit</md-icon>
+      </button>
+    <button md-icon-button (click)="deleteRecipe(recipe)" mdTooltip="Delete">
+        <md-icon>delete</md-icon>
+      </button>
+  </md-list-item>
+</md-list>
+
+<button md-mini-fab class="add-fab" [routerLink]="['/recipeEdit', 0]">
+    <md-icon>add</md-icon>
+</button>

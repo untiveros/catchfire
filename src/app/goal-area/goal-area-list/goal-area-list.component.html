@@ -1,8 +1,7 @@
-<md-toolbar>
-  {{ pageTitle }}</md-toolbar>
+<md-toolbar>{{ pageTitle }}</md-toolbar>
 
-<md-list style="padding-top: 0px;">
-  <md-list-item *ngFor="let goalArea of goalAreas" style="border-top: 1px solid rgba(0,0,0,.06);">
+<md-list class="md-list-custom">
+  <md-list-item *ngFor="let goalArea of goalAreas" class="md-list-item-custom">
     <h4 md-line>{{goalArea.goalAreaName}}</h4>
     <button md-icon-button [routerLink]="['/goalAreaEdit', goalArea.goalAreaId]" mdTooltip="Edit">
         <md-icon>edit</md-icon>
@@ -15,4 +14,4 @@
 
 <button md-mini-fab class="add-fab" [routerLink]="['/goalAreaEdit', 0]">
     <md-icon>add</md-icon>
-  </button>
+</button>

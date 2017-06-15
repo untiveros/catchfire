@@ -3,3 +3,12 @@
     right: 15px;
     bottom: 15px;
 }
+
+.md-list-custom {
+    padding-top: 0px;
+    padding-bottom: 60px;
+}
+
+.md-list-item-custom {
+    border-top: 1px solid rgba(0,0,0,.06);
+}

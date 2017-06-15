@@ -14,6 +14,9 @@ import { ConfirmDeleteDialogComponent } from './confirm-delete-dialog/confirm-de
 import { TraitModule } from './trait/trait.module';
 import { GoalModule } from './goal/goal.module';
 import { GoalAreaModule } from './goal-area/goal-area.module';
+import { RecipeIngredientModule } from './recipe-ingredient/recipe-ingredient.module';
+import { IngredientModule } from './ingredient/ingredient.module';
+import { RecipeModule } from './recipe/recipe.module';
 
 @NgModule({
   declarations: [
@@ -28,7 +31,10 @@ import { GoalAreaModule } from './goal-area/goal-area.module';
     SharedModule,
     TraitModule,
     GoalModule,
-    GoalAreaModule
+    GoalAreaModule,
+    RecipeIngredientModule,
+    IngredientModule,
+    RecipeModule
   ],
   providers: [],
   bootstrap: [AppComponent],
